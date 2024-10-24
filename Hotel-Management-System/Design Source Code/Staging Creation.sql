@@ -45,20 +45,6 @@ CREATE TABLE Date_Dimension (
 );
 
 ----------------------------------------------------------
-DECLARE @DateCounter DATE = '2015-01-01';
-
-CREATE TABLE Date_Dimension (
-    Date_Key INT PRIMARY KEY,
-    Day VARCHAR(10),
-    Month VARCHAR(10),
-    Year INT
-);
-CREATE TABLE Date_Dimension (
-    Date_Key INT PRIMARY KEY,
-    Day VARCHAR(10),
-    Month VARCHAR(10),
-    Year INT
-);
 
 -- Populate the Date Dimension table
 DECLARE @DateCounter DATE = '2015-01-01';
