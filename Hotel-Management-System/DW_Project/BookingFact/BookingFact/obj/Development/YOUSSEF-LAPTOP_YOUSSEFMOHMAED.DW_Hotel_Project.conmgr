@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="YOUSSEF-LAPTOP_YOUSSEFMOHMAED.DW_Hotel_Project"
+  DTS:DTSID="{69D94291-284D-475A-9E6D-6861E71562E1}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=YOUSSEF-LAPTOP\YOUSSEFMOHMAED;Initial Catalog=DW_Hotel_Project;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-BookingFact-{69D94291-284D-475A-9E6D-6861E71562E1}YOUSSEF-LAPTOP\YOUSSEFMOHMAED.DW_Hotel_Project;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

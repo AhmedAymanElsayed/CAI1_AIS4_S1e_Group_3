@@ -1,0 +1,3053 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/16/2024 6:12:15 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ASEM"
+  DTS:CreatorName="ASEM\aseme"
+  DTS:DTSID="{C21F5633-710A-4433-B0BB-7A355FE1AA3E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Loading_Data_Into_Hotel_Status_Fact"
+  DTS:PackageType="5"
+  DTS:VersionBuild="44"
+  DTS:VersionGUID="{D9F2EE98-4658-4107-B708-78740A45A008}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Loading Data intp Hotel_Status Fact"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F0DB9D12-EC32-44E4-9CF2-9A983C2807C3}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Loading Data intp Hotel_Status Fact"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Calculate avilable and busy percentage"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Inputs[Derived Column Input].Columns[Available rooms]"
+                      cachedDataType="ui8"
+                      cachedName="Available rooms"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Available rooms]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Inputs[Derived Column Input].Columns[Busy rooms]"
+                      cachedDataType="ui8"
+                      cachedName="Busy rooms"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Busy rooms]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Output].Columns[Available_Rooms_Percentage]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Output].Columns[Available_Rooms_Percentage]"
+                      name="Available_Rooms_Percentage"
+                      precision="38"
+                      scale="16"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[ROUND]((1.0 * #{Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Available rooms]}) / (#{Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Available rooms]} + #{Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Busy rooms]}),2)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ROUND((1.0 * [Available rooms]) / ([Available rooms] + [Busy rooms]),2)</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Output].Columns[Busy_Rooms_Percentage]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Output].Columns[Busy_Rooms_Percentage]"
+                      name="Busy_Rooms_Percentage"
+                      precision="38"
+                      scale="16"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[ROUND]((1.0 * #{Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Busy rooms]}) / (#{Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Available rooms]} + #{Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Busy rooms]}),2)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ROUND((1.0 * [Busy rooms]) / ([Available rooms] + [Busy rooms]),2)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Dest_Hotel_Status_Fact"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[FACT].[HotelStatusFact]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Connections[OleDbConnection]"
+                  connectionManagerID="{7691C09A-100B-4276-9271-43F706279BA1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ASEM.DW_Hotel_Project]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].Columns[Hotel_ID]"
+                      cachedDataType="i4"
+                      cachedName="Hotel_ID"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Hotel_ID]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Hotel_ID]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].Columns[Available_Rooms_Percentage]"
+                      cachedDataType="numeric"
+                      cachedName="Available_Rooms_Percentage"
+                      cachedPrecision="38"
+                      cachedScale="16"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Available_Rooms_Percentage]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Output].Columns[Available_Rooms_Percentage]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].Columns[Busy_Rooms_Percentage]"
+                      cachedDataType="numeric"
+                      cachedName="Busy_Rooms_Percentage"
+                      cachedPrecision="38"
+                      cachedScale="16"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Busy_Rooms_Percentage]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Output].Columns[Busy_Rooms_Percentage]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].Columns[Date]"
+                      cachedDataType="i4"
+                      cachedName="Date"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Date_Key]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Output].Columns[Date]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].Columns[Available rooms]"
+                      cachedDataType="ui8"
+                      cachedName="Available rooms"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Available_Rooms]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Available rooms]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].Columns[Busy rooms]"
+                      cachedDataType="ui8"
+                      cachedName="Busy rooms"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Busy_Rooms]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Busy rooms]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[HotelStatus_Key]"
+                      dataType="i4"
+                      name="HotelStatus_Key" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Hotel_ID]"
+                      dataType="i4"
+                      name="Hotel_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Date_Key]"
+                      dataType="i4"
+                      name="Date_Key" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Available_Rooms]"
+                      dataType="i4"
+                      name="Available_Rooms" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Busy_Rooms]"
+                      dataType="i4"
+                      name="Busy_Rooms" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Available_Rooms_Percentage]"
+                      dataType="numeric"
+                      name="Available_Rooms_Percentage"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input].ExternalColumns[Busy_Rooms_Percentage]"
+                      dataType="numeric"
+                      name="Busy_Rooms_Percentage"
+                      precision="10"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms"
+              componentClassID="Microsoft.Aggregate"
+              contactInfo="Aggregate;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Aggregates data with functions such as Average, Sum, Count, Max, and Min. For example, group data to compute the sum of sales per product or the average visits per day."
+              name="Get num of available rooms"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                  name="KeyScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                  name="Keys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                  name="CountDistinctScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                  name="CountDistinctKeys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage by which memory can be extended during the aggregation. Valid values are between 1 and 100."
+                  name="AutoExtendFactor">25</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Inputs[Aggregate Input 1]"
+                  name="Aggregate Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Inputs[Aggregate Input 1].Columns[Hotel_ID]"
+                      cachedDataType="i4"
+                      cachedName="Hotel_ID"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Hotel_ID]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Inputs[Aggregate Input 1].Columns[Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Status"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Status]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1]"
+                  name="Aggregate Output 1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                      name="Keys" />
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1].Columns[Hotel_ID]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1].Columns[Hotel_ID]"
+                      name="Hotel_ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Hotel_ID]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1].Columns[Status]"
+                      dataType="ui8"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1].Columns[Status]"
+                      name="Status">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Status]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms"
+              componentClassID="Microsoft.Aggregate"
+              contactInfo="Aggregate;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Aggregates data with functions such as Average, Sum, Count, Max, and Min. For example, group data to compute the sum of sales per product or the average visits per day."
+              name="Get num of busy rooms"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                  name="KeyScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                  name="Keys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                  name="CountDistinctScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                  name="CountDistinctKeys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage by which memory can be extended during the aggregation. Valid values are between 1 and 100."
+                  name="AutoExtendFactor">25</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Inputs[Aggregate Input 1]"
+                  name="Aggregate Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Inputs[Aggregate Input 1].Columns[Hotel_ID]"
+                      cachedDataType="i4"
+                      cachedName="Hotel_ID"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Hotel_ID]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Inputs[Aggregate Input 1].Columns[Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Status"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Status]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1]"
+                  name="Aggregate Output 1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                      name="Keys" />
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1].Columns[Hotel_ID]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1].Columns[Hotel_ID]"
+                      name="Hotel_ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Hotel_ID]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1].Columns[Status]"
+                      dataType="ui8"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1].Columns[Status]"
+                      name="Status">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Status]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\Get today's date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Get today's date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Output].Columns[Date]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Output].Columns[Date]"
+                      name="Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)(DT_STR,8,1252)([DATEPART]("year",[GETDATE]()) * 10000 + [DATEPART]("month",[GETDATE]()) * 100 + [DATEPART]("day",[GETDATE]()))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)(DT_STR,8,1252)(DATEPART("year",GETDATE()) * 10000 + DATEPART("month",GETDATE()) * 100 + DATEPART("day",GETDATE()))</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge buys rooms with available"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Left Input].Columns[Hotel_ID]"
+                      cachedDataType="i4"
+                      cachedName="Hotel_ID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Outputs[Sort Output].Columns[Hotel_ID]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Left Input].Columns[Status]"
+                      cachedDataType="ui8"
+                      cachedName="Status"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Outputs[Sort Output].Columns[Status]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Right Input].Columns[Hotel_ID]"
+                      cachedDataType="i4"
+                      cachedName="Hotel_ID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Outputs[Sort Output].Columns[Hotel_ID]" />
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Right Input].Columns[Status]"
+                      cachedDataType="ui8"
+                      cachedName="Status"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Outputs[Sort Output].Columns[Status]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Hotel_ID]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Hotel_ID]"
+                      name="Hotel_ID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Left Input].Columns[Hotel_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Available rooms]"
+                      dataType="ui8"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Available rooms]"
+                      name="Available rooms">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Left Input].Columns[Status]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Busy rooms]"
+                      dataType="ui8"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output].Columns[Busy rooms]"
+                      name="Busy rooms">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Right Input].Columns[Status]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\Separate data by status"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Separate data by status"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Inputs[Conditional Split Input].Columns[Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Status"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Status]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[BusyRooms]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="BusyRooms"
+                  synchronousInputId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">#{Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Status]} == "Busy"</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">Status == "Busy"</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[AvailableRooms]"
+                  description="Output 2 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="AvailableRooms"
+                  synchronousInputId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">#{Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Status]} == "Available"</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">Status == "Available"</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">1</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort available rooms by hotel id"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Inputs[Sort Input].Columns[Hotel_ID]"
+                      cachedDataType="i4"
+                      cachedName="Hotel_ID"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1].Columns[Hotel_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Inputs[Sort Input].Columns[Status]"
+                      cachedDataType="ui8"
+                      cachedName="Status"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1].Columns[Status]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Outputs[Sort Output].Columns[Hotel_ID]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Outputs[Sort Output].Columns[Hotel_ID]"
+                      name="Hotel_ID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1].Columns[Hotel_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Outputs[Sort Output].Columns[Status]"
+                      dataType="ui8"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Outputs[Sort Output].Columns[Status]"
+                      name="Status"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1].Columns[Status]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort busy rooms by hotel id"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Inputs[Sort Input].Columns[Hotel_ID]"
+                      cachedDataType="i4"
+                      cachedName="Hotel_ID"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1].Columns[Hotel_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Inputs[Sort Input].Columns[Status]"
+                      cachedDataType="ui8"
+                      cachedName="Status"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1].Columns[Status]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Outputs[Sort Output].Columns[Hotel_ID]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Outputs[Sort Output].Columns[Hotel_ID]"
+                      name="Hotel_ID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1].Columns[Hotel_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Outputs[Sort Output].Columns[Status]"
+                      dataType="ui8"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Outputs[Sort Output].Columns[Status]"
+                      name="Status"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1].Columns[Status]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_STG_Room"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[STG].[Room]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Connections[OleDbConnection]"
+                  connectionManagerID="{7691C09A-100B-4276-9271-43F706279BA1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ASEM.DW_Hotel_Project]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[Status]"
+                      length="20"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Status]"
+                      name="Status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[RoomNr]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[RoomNr]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[RoomNr]"
+                      name="RoomNr"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[TypeName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[TypeName]"
+                      length="50"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[TypeName]"
+                      name="TypeName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Capacity]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[Capacity]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Capacity]"
+                      name="Capacity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[PricePerNight]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[PricePerNight]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[PricePerNight]"
+                      name="PricePerNight"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Hotel_ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[Hotel_ID]"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].Columns[Hotel_ID]"
+                      name="Hotel_ID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[RoomNr]"
+                      dataType="i4"
+                      name="RoomNr" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[TypeName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TypeName" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[Capacity]"
+                      dataType="i4"
+                      name="Capacity" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[PricePerNight]"
+                      dataType="numeric"
+                      name="PricePerNight"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output].ExternalColumns[Hotel_ID]"
+                      dataType="i4"
+                      name="Hotel_ID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[RoomNr]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[RoomNr]"
+                      name="RoomNr" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[TypeName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[TypeName]"
+                      name="TypeName" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[Capacity]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[Capacity]"
+                      name="Capacity" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[Status]"
+                      name="Status" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[PricePerNight]"
+                      dataType="numeric"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[PricePerNight]"
+                      name="PricePerNight"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[Hotel_ID]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[Hotel_ID]"
+                      name="Hotel_ID" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[Aggregate Output 1]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Inputs[Sort Input]"
+              name="Aggregate Output 1"
+              startId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Outputs[Aggregate Output 1]" />
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[Aggregate Output 11]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Inputs[Sort Input]"
+              name="Aggregate Output 1"
+              startId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Outputs[Aggregate Output 1]" />
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[AvailableRooms]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms.Inputs[Aggregate Input 1]"
+              name="AvailableRooms"
+              startId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[AvailableRooms]" />
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[BusyRooms]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms.Inputs[Aggregate Input 1]"
+              name="BusyRooms"
+              startId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Outputs[BusyRooms]" />
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[Derived Column Output]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[Derived Column Output1]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[Merge Join Output]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Get today's date.Inputs[Derived Column Input]"
+              name="Merge Join Output"
+              startId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[OLE DB Source Output]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Separate data by status.Inputs[Conditional Split Input]"
+              name="OLE DB Source Output"
+              startId="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[Sort Output]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id.Outputs[Sort Output]" />
+            <path
+              refId="Package\Loading Data intp Hotel_Status Fact.Paths[Sort Output1]"
+              endId="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Loading Room data from SRC to STG"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2618B30D-3458-425E-80E8-564040E91FC2}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Loading Room data from SRC to STG"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Loading Room data from SRC to STG\DES_STG_Room"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="DES_STG_Room"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[STG].[Room]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Connections[OleDbConnection]"
+                  connectionManagerID="{7691C09A-100B-4276-9271-43F706279BA1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ASEM.DW_Hotel_Project]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].Columns[Status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Status"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[Status]" />
+                    <inputColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].Columns[Capacity]"
+                      cachedDataType="i4"
+                      cachedName="Capacity"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[Capacity]"
+                      lineageId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output].Columns[Capacity]" />
+                    <inputColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].Columns[PricePerNight]"
+                      cachedDataType="numeric"
+                      cachedName="PricePerNight"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[PricePerNight]"
+                      lineageId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output].Columns[PricePerNight]" />
+                    <inputColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].Columns[Name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[TypeName]"
+                      lineageId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].Columns[RoomID]"
+                      cachedDataType="i4"
+                      cachedName="RoomID"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[RoomNr]"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[RoomID]" />
+                    <inputColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].Columns[HotelID]"
+                      cachedDataType="i4"
+                      cachedName="HotelID"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[Hotel_ID]"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[HotelID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[RoomNr]"
+                      dataType="i4"
+                      name="RoomNr" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[TypeName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TypeName" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[Capacity]"
+                      dataType="i4"
+                      name="Capacity" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[PricePerNight]"
+                      dataType="numeric"
+                      name="PricePerNight"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input].ExternalColumns[Hotel_ID]"
+                      dataType="i4"
+                      name="Hotel_ID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Loading Room data from SRC to STG\DES_STG_Room.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\DES_STG_Room.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Loading Room data from SRC to STG\DES_STG_Room.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Room data from SRC to STG\Get needed data from room type"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Get needed data from room type"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [SRC].[RoomType]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [SRC].[RoomType]) [refTable]
+where [refTable].[TypeID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="TypeID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Name" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Description" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="PricePerNight" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="Capacity" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[TypeID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Connections[OleDbConnection]"
+                  connectionManagerID="{7691C09A-100B-4276-9271-43F706279BA1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ASEM.DW_Hotel_Project]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Inputs[Lookup Input].Columns[TypeID]"
+                      cachedDataType="i4"
+                      cachedName="TypeID"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[TypeID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">TypeID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Loading Room data from SRC to STG\Get needed data from room type.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output].Columns[Capacity]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output].Columns[Capacity]"
+                      name="Capacity"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Capacity</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output].Columns[PricePerNight]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output].Columns[PricePerNight]"
+                      name="PricePerNight"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">PricePerNight</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output].Columns[Name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Copy Column"
+                      length="50"
+                      lineageId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">Name</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Loading Room data from SRC to STG\Get needed data from room type.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Loading Room data from SRC to STG\Get needed data from room type.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Loading Room data from SRC to STG\SRC_Room"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_Room"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[SRC].[Room]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">DECLARE @LastExtractionDate DATE;
+DECLARE @CurrentDate DATE;
+SELECT @LastExtractionDate = CONVERT(DATE, Last_Extraction_Date) FROM Conf_Table;
+SET @CurrentDate = CONVERT(DATE, GETDATE());
+
+IF @LastExtractionDate &lt; @CurrentDate
+BEGIN
+    IF EXISTS (SELECT 1 FROM SRC.Room)
+    BEGIN
+        SELECT * FROM SRC.Room;
+    END
+    ELSE
+    BEGIN
+        -- Handle the scenario where no rows are returned from SRC.Room
+        -- You can add logging, send notifications, or take other actions here
+        -- For example:
+        PRINT 'No rows returned from SRC.Room';
+    END;
+END;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Loading Room data from SRC to STG\SRC_Room.Connections[OleDbConnection]"
+                  connectionManagerID="{7691C09A-100B-4276-9271-43F706279BA1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ASEM.DW_Hotel_Project]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[HotelID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].ExternalColumns[HotelID]"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[HotelID]"
+                      name="HotelID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[RoomID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].ExternalColumns[RoomID]"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[RoomID]"
+                      name="RoomID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[TypeID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].ExternalColumns[TypeID]"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[TypeID]"
+                      name="TypeID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].ExternalColumns[Status]"
+                      length="20"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].Columns[Status]"
+                      name="Status"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].ExternalColumns[HotelID]"
+                      dataType="i4"
+                      name="HotelID" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].ExternalColumns[RoomID]"
+                      dataType="i4"
+                      name="RoomID" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].ExternalColumns[TypeID]"
+                      dataType="i4"
+                      name="TypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output].ExternalColumns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Status" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[RoomID]"
+                      dataType="i4"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[RoomID]"
+                      name="RoomID" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[HotelID]"
+                      dataType="i4"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[HotelID]"
+                      name="HotelID" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[TypeID]"
+                      dataType="i4"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[TypeID]"
+                      name="TypeID" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[Status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[Status]"
+                      name="Status" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Loading Room data from SRC to STG.Paths[Lookup Match Output]"
+              endId="Package\Loading Room data from SRC to STG\DES_STG_Room.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\Loading Room data from SRC to STG\Get needed data from room type.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Loading Room data from SRC to STG.Paths[OLE DB Source Output]"
+              endId="Package\Loading Room data from SRC to STG\Get needed data from room type.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Loading Room data from SRC to STG\SRC_Room.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate stg on the same dates"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{07C29243-5081-4EDC-AFA2-4CC1487C0E82}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate stg on the same dates"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Truncate stg on the same dates\Is the table loaded today?"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Is the table loaded today?"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Truncate stg on the same dates\Is the table loaded today?.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Truncate stg on the same dates\Is the table loaded today?.Inputs[Conditional Split Input].Columns[Last_Extraction_Date]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Last_Extraction_Date"
+                      lineageId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Output].Columns[Last_Extraction_Date]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Truncate stg on the same dates\Is the table loaded today?.Outputs[Case 1]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Case 1"
+                  synchronousInputId="Package\Truncate stg on the same dates\Is the table loaded today?.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">[DAY]((DT_DBDATE)(#{Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Output].Columns[Last_Extraction_Date]})) == [DAY]((DT_DBDATE)[GETDATE]())</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">DAY((DT_DBDATE)(Last_Extraction_Date)) == DAY((DT_DBDATE)GETDATE())</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Truncate stg on the same dates\Is the table loaded today?.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Truncate stg on the same dates\Is the table loaded today?.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Truncate stg on the same dates\Is the table loaded today?.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Truncate stg on the same dates\Is the table loaded today?.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Truncate stg on the same dates\Is the table loaded today?.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Truncate stg on the same dates\Is the table loaded today?.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Truncate stg on the same dates\Is the table loaded today?.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Truncate stg on the same dates\Is the table loaded today?.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Truncate stg on the same dates\Loading Last extraction from conf table"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Loading Last extraction from conf table"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT Last_Extraction_Date
+FROM
+Conf_Table
+where Table_Name = 'Hotel'</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Connections[OleDbConnection]"
+                  connectionManagerID="{7691C09A-100B-4276-9271-43F706279BA1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ASEM.DW_Hotel_Project]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Output].Columns[Last_Extraction_Date]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Output].ExternalColumns[Last_Extraction_Date]"
+                      length="10"
+                      lineageId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Output].Columns[Last_Extraction_Date]"
+                      name="Last_Extraction_Date"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Output].ExternalColumns[Last_Extraction_Date]"
+                      dataType="wstr"
+                      length="10"
+                      name="Last_Extraction_Date" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Error Output].Columns[Last_Extraction_Date]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Error Output].Columns[Last_Extraction_Date]"
+                      name="Last_Extraction_Date" />
+                    <outputColumn
+                      refId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Truncate stg on the same dates\Truncate stg"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Truncate stg"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Truncate table STG.Room</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Truncate stg on the same dates\Truncate stg.Connections[OleDbConnection]"
+                  connectionManagerID="{7691C09A-100B-4276-9271-43F706279BA1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[ASEM.DW_Hotel_Project]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Truncate stg on the same dates\Truncate stg.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <externalMetadataColumns
+                    isUsed="True" />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Truncate stg on the same dates\Truncate stg.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Truncate stg on the same dates\Truncate stg.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Truncate stg on the same dates\Truncate stg.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Truncate stg on the same dates\Truncate stg.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Truncate stg on the same dates\Truncate stg.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Truncate stg on the same dates\Truncate stg.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Truncate stg on the same dates\Truncate stg.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Truncate stg on the same dates\Truncate stg.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Truncate stg on the same dates.Paths[Case 1]"
+              endId="Package\Truncate stg on the same dates\Truncate stg.Inputs[OLE DB Command Input]"
+              name="Case 1"
+              startId="Package\Truncate stg on the same dates\Is the table loaded today?.Outputs[Case 1]" />
+            <path
+              refId="Package\Truncate stg on the same dates.Paths[OLE DB Source Output]"
+              endId="Package\Truncate stg on the same dates\Is the table loaded today?.Inputs[Conditional Split Input]"
+              name="OLE DB Source Output"
+              startId="Package\Truncate stg on the same dates\Loading Last extraction from conf table.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate STG_Room"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{EEFB5DD1-2045-4809-B193-1F7990B7F3B7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate STG_Room"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7691C09A-100B-4276-9271-43F706279BA1}"
+          SQLTask:SqlStatementSource="Truncate table STG.Room" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update config table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{572CE445-B7E4-4463-8380-7DC285A206DB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update config table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7691C09A-100B-4276-9271-43F706279BA1}"
+          SQLTask:SqlStatementSource="UPDATE Conf_Table&#xA;SET Last_Extraction_Date = CONVERT(DATE, GETDATE())&#xA;WHERE Table_Name = 'Hotel';&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{47FA2964-05BD-4C30-A901-1388AB94F36A}"
+      DTS:From="Package\Truncate STG_Room"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Loading Room data from SRC to STG" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{3ED0F4E7-29FC-4C1A-8441-DEF1E958DC1C}"
+      DTS:From="Package\Loading Room data from SRC to STG"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Truncate stg on the same dates" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{FE28D9FC-9F7E-4EBA-828F-9788B60165FD}"
+      DTS:From="Package\Loading Data intp Hotel_Status Fact"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Update config table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{6CE29A50-DAD2-4C59-AD71-676ED6FEF538}"
+      DTS:From="Package\Truncate stg on the same dates"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Loading Data intp Hotel_Status Fact" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="244.8,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact"
+          TopLeft="347.499986191592,312.000002479553" />
+        <NodeLayout
+          Size="252.8,41.6"
+          Id="Package\Loading Room data from SRC to STG"
+          TopLeft="346.666652891372,143.000001136463" />
+        <NodeLayout
+          Size="224,41.6"
+          Id="Package\Truncate stg on the same dates"
+          TopLeft="364.166652195984,216.666668388579" />
+        <NodeLayout
+          Size="176.8,41.6"
+          Id="Package\Truncate STG_Room"
+          TopLeft="378.333318299718,52.0000004132589" />
+        <NodeLayout
+          Size="168,41.6"
+          Id="Package\Update config table"
+          TopLeft="378.333318299718,399.533336508539" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="469.899985595545,93.6000004132589">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.400000723204"
+              Start="0,0"
+              End="0,41.900000723204">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.900000723204" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="474.616652543678,184.600001136463">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.0666672521157"
+              Start="0,0"
+              End="0,24.5666672521157">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5666672521157" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="466.116652245655,353.600002479553">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.933334028986"
+              Start="0,0"
+              End="0,38.433334028986">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.433334028986" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="473.033319193788,258.266668388579">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.7333340909746"
+              Start="0,0"
+              End="0,46.2333340909746">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.2333340909746" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Loading Data intp Hotel_Status Fact">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="191.2,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact"
+          TopLeft="524.166645838156,655.800003120105" />
+        <NodeLayout
+          Size="188,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\Separate data by status"
+          TopLeft="436.666649315093,103.466667438083" />
+        <NodeLayout
+          Size="229.6,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\Merge buys rooms with available"
+          TopLeft="539.999978542329,392.733335144785" />
+        <NodeLayout
+          Size="205.6,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\Get num of available rooms"
+          TopLeft="305.833321180609,179.733334710863" />
+        <NodeLayout
+          Size="204,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\Sort busy rooms by hotel id"
+          TopLeft="661.666640374397,261.666667830679" />
+        <NodeLayout
+          Size="160.8,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room"
+          TopLeft="445.833315617509,28.6000002272924" />
+        <NodeLayout
+          Size="223.2,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\Sort available rooms by hotel id"
+          TopLeft="291.666655076875,271.200001239777" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\Get today's date"
+          TopLeft="574.166643851334,474.533335000144" />
+        <NodeLayout
+          Size="260,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\Calculate avilable and busy percentage"
+          TopLeft="477.499981025855,565.466668967141" />
+        <NodeLayout
+          Size="185.6,41.6"
+          Id="Package\Loading Data intp Hotel_Status Fact\Get num of busy rooms"
+          TopLeft="629.99997496605,176.266668016646" />
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[OLE DB Source Output]"
+          TopLeft="528.449982466301,70.2000002272924">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.2666672107909"
+              Start="0,0"
+              End="0,25.7666672107909">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.7666672107909" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[Merge Join Output]"
+          TopLeft="652.883311196832,434.333335144785">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.1999998553595"
+              Start="0,0"
+              End="0,32.6999998553595">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.6999998553595" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[Derived Column Output1]"
+          TopLeft="607.499981025855,607.066668967141">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12.2666648123003,48.7333341529634"
+              Start="0,0"
+              End="12.2666648123003,41.2333341529634">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.3666670764817" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.3666670764817"
+                    Point2="0,24.3666670764817"
+                    Point3="4,24.3666670764817" />
+                  <mssgle:LineSegment
+                    End="8.26666481230029,24.3666670764817" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.26666481230029,24.3666670764817"
+                    Point2="12.2666648123003,24.3666670764817"
+                    Point3="12.2666648123003,28.3666670764817" />
+                  <mssgle:LineSegment
+                    End="12.2666648123003,41.2333341529634" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[Derived Column Output]"
+          TopLeft="650.966643851334,516.133335000144">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-43.4666628254791,49.3333339669969"
+              Start="0,0"
+              End="-43.4666628254791,41.8333339669969">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.6666669834984" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.6666669834984"
+                    Point2="0,24.6666669834984"
+                    Point3="-4,24.6666669834984" />
+                  <mssgle:LineSegment
+                    End="-39.4666628254791,24.6666669834984" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-39.4666628254791,24.6666669834984"
+                    Point2="-43.4666628254791,24.6666669834984"
+                    Point3="-43.4666628254791,28.6666669834984" />
+                  <mssgle:LineSegment
+                    End="-43.4666628254791,41.8333339669969" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[BusyRooms]"
+          TopLeft="530.666649315093,145.066667438083">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="192.133325650957,31.2000005785624"
+              Start="0,0"
+              End="192.133325650957,23.7000005785624">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.6000002892812" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.6000002892812"
+                    Point2="0,15.6000002892812"
+                    Point3="4,15.6000002892812" />
+                  <mssgle:LineSegment
+                    End="188.133325650957,15.6000002892812" />
+                  <mssgle:CubicBezierSegment
+                    Point1="188.133325650957,15.6000002892812"
+                    Point2="192.133325650957,15.6000002892812"
+                    Point3="192.133325650957,19.6000002892812" />
+                  <mssgle:LineSegment
+                    End="192.133325650957,23.7000005785624" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="70.1090847004785,20.6000002892812,51.91515625,11.2822265625"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[AvailableRooms]"
+          TopLeft="500.666649315093,145.066667438083">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-92.0333281344844,34.6666672727796"
+              Start="0,0"
+              End="-92.0333281344844,27.1666672727796">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.0421943383411" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.0421943383411"
+                    Point2="0,14.0421943383411"
+                    Point3="-4,14.0421943383411" />
+                  <mssgle:LineSegment
+                    End="-88.0333281344844,14.0421943383411" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-88.0333281344844,14.0421943383411"
+                    Point2="-92.0333281344844,14.0421943383411"
+                    Point3="-92.0333281344844,18.0421943383411" />
+                  <mssgle:LineSegment
+                    End="-92.0333281344844,27.1666672727796" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-81.4823085984922,19.0421943383411,70.9312890625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[Aggregate Output 11]"
+          TopLeft="722.79997496605,217.866668016646">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="40.8666654083466,43.7999998140335"
+              Start="0,0"
+              End="40.8666654083466,36.2999998140335">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.8999999070167" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.8999999070167"
+                    Point2="0,21.8999999070167"
+                    Point3="4,21.8999999070167" />
+                  <mssgle:LineSegment
+                    End="36.8666654083466,21.8999999070167" />
+                  <mssgle:CubicBezierSegment
+                    Point1="36.8666654083466,21.8999999070167"
+                    Point2="40.8666654083466,21.8999999070167"
+                    Point3="40.8666654083466,25.8999999070167" />
+                  <mssgle:LineSegment
+                    End="40.8666654083466,36.2999998140335" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[Aggregate Output 1]"
+          TopLeft="405.949988128742,221.333334710863">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.8666665289138"
+              Start="0,0"
+              End="0,42.3666665289138">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.3666665289138" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[Sort Output1]"
+          TopLeft="763.666640374397,303.266667830679">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-71.9333284987347,89.4666673141056"
+              Start="0,0"
+              End="-71.9333284987347,81.9666673141056">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.3085124965017" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,49.3085124965017"
+                    Point2="0,53.3085124965017"
+                    Point3="-4,53.3085124965017" />
+                  <mssgle:LineSegment
+                    End="-67.9333284987347,53.3085124965017" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-67.9333284987347,53.3085124965017"
+                    Point2="-71.9333284987347,53.3085124965017"
+                    Point3="-71.9333284987347,57.3085124965017" />
+                  <mssgle:LineSegment
+                    End="-71.9333284987347,81.9666673141056" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Data intp Hotel_Status Fact.Paths[Sort Output]"
+          TopLeft="403.266655076875,312.800001239777">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="251.533323465454,79.933333905008"
+              Start="0,0"
+              End="251.533323465454,72.433333905008">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.966666952504" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,35.966666952504"
+                    Point2="0,39.966666952504"
+                    Point3="4,39.966666952504" />
+                  <mssgle:LineSegment
+                    End="247.533323465454,39.966666952504" />
+                  <mssgle:CubicBezierSegment
+                    Point1="247.533323465454,39.966666952504"
+                    Point2="251.533323465454,39.966666952504"
+                    Point3="251.533323465454,43.966666952504" />
+                  <mssgle:LineSegment
+                    End="251.533323465454,72.433333905008" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loading Data intp Hotel_Status Fact\Dest_Hotel_Status_Fact">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loading Data intp Hotel_Status Fact\SRC_STG_Room">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Loading Room data from SRC to STG">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="133.6,41.6"
+          Id="Package\Loading Room data from SRC to STG\SRC_Room"
+          TopLeft="454.166648619706,45.9333336983787" />
+        <NodeLayout
+          Size="228,41.6"
+          Id="Package\Loading Room data from SRC to STG\Get needed data from room type"
+          TopLeft="419.166668090555,145" />
+        <NodeLayout
+          Size="160,41.6"
+          Id="Package\Loading Room data from SRC to STG\DES_STG_Room"
+          TopLeft="492,264" />
+        <EdgeLayout
+          Id="Package\Loading Room data from SRC to STG.Paths[OLE DB Source Output]"
+          TopLeft="520.966648619706,87.5333336983787">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12.2000194708493,57.4666663016213"
+              Start="0,0"
+              End="12.2000194708493,49.9666663016213">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.7333331508107" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.7333331508107"
+                    Point2="0,28.7333331508107"
+                    Point3="4,28.7333331508107" />
+                  <mssgle:LineSegment
+                    End="8.20001947084927,28.7333331508107" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.20001947084927,28.7333331508107"
+                    Point2="12.2000194708493,28.7333331508107"
+                    Point3="12.2000194708493,32.7333331508107" />
+                  <mssgle:LineSegment
+                    End="12.2000194708493,49.9666663016213" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loading Room data from SRC to STG.Paths[Lookup Match Output]"
+          TopLeft="533.166668090555,186.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="38.8333319094447,77.4"
+              Start="0,0"
+              End="38.8333319094447,69.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.7" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.7"
+                    Point2="0,38.7"
+                    Point3="4,38.7" />
+                  <mssgle:LineSegment
+                    End="34.8333319094447,38.7" />
+                  <mssgle:CubicBezierSegment
+                    Point1="34.8333319094447,38.7"
+                    Point2="38.8333319094447,38.7"
+                    Point3="38.8333319094447,42.7" />
+                  <mssgle:LineSegment
+                    End="38.8333319094447,69.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-28.7747207640276,43.7,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loading Room data from SRC to STG\SRC_Room">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loading Room data from SRC to STG\Get needed data from room type">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[SRC].[RoomType]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loading Room data from SRC to STG\DES_STG_Room">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Truncate stg on the same dates">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="136,41.6"
+          Id="Package\Truncate stg on the same dates\Truncate stg"
+          TopLeft="570,289.230769230769" />
+        <NodeLayout
+          Size="196.8,41.6"
+          Id="Package\Truncate stg on the same dates\Is the table loaded today?"
+          TopLeft="535,175" />
+        <NodeLayout
+          Size="256.8,41.6"
+          Id="Package\Truncate stg on the same dates\Loading Last extraction from conf table"
+          TopLeft="490,63" />
+        <EdgeLayout
+          Id="Package\Truncate stg on the same dates.Paths[OLE DB Source Output]"
+          TopLeft="618.4,104.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="15.0000000000001,70.4"
+              Start="0,0"
+              End="15.0000000000001,62.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.2"
+                    Point2="0,35.2"
+                    Point3="4,35.2" />
+                  <mssgle:LineSegment
+                    End="11.0000000000001,35.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="11.0000000000001,35.2"
+                    Point2="15.0000000000001,35.2"
+                    Point3="15.0000000000001,39.2" />
+                  <mssgle:LineSegment
+                    End="15.0000000000001,62.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Truncate stg on the same dates.Paths[Case 1]"
+          TopLeft="635.7,216.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72.6307692307692"
+              Start="0,0"
+              End="0,65.1307692307692">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,65.1307692307692" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-15.2180859375,27.7885291466346,30.436171875,9.5537109375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Truncate stg on the same dates\Loading Last extraction from conf table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
