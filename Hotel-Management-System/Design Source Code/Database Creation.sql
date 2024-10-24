@@ -335,15 +335,4 @@ BEGIN
 END;
 
 
-create TABLE payment_temp (
-    PaymentID INT PRIMARY KEY,
-    PaymentAmount DECIMAL(10,2) NOT NULL,
-    PaymentMethod VARCHAR(50) NOT NULL,
-    PaymentDate DATE NOT NULL,
-    GuestID INT FOREIGN KEY REFERENCES Guest(GuestID)
-);
--- Insert data into the temporary dimension table from the Payment table
-INSERT INTO paymepayment_temp(PaymentID, PaymentAmount, PaymentMethod, PaymentDate, GuestID)
-SELECT PaymentID, PaymentAmount, PaymentMethod, PaymentDate, GuestID, NULL
-FROM Payment;
 
